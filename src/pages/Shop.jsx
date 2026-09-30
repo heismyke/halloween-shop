@@ -5,15 +5,15 @@ import { useCart } from '../context/CartContext.jsx'
 
 export function Tile({ product, size = '' }) {
   return (
-    <div className={`tile ${size}`} style={{ '--tone': product.tone }} aria-hidden="true">
-      <span>{product.emoji}</span>
+    <div className={`tile ${size}`}>
+      <img src={`/images/products/${product.id}.webp`} alt={product.name} loading={size === 'big' ? 'eager' : 'lazy'} width="800" height="800" />
     </div>
   )
 }
 
 export default function Shop() {
   const [cat, setCat] = useState('All')
-  const { dispatch } = useCart()
+  const { dispatch, count, subtotal } = useCart()
   const [added, setAdded] = useState(null)
   const list = cat === 'All' ? products : products.filter((p) => p.category === cat)
 
@@ -25,16 +25,21 @@ export default function Shop() {
   return (
     <>
       <section className="hero">
-        <div>
-          <h1>The 31st arrives whether you are ready or not.</h1>
-          <p>Decor, costumes, candy and light for every doorway. Ships in time.</p>
+        <img className="hero-photo" src="/images/hero.webp" alt="Glowing jack-o’-lanterns and candle lanterns on a Halloween porch" fetchPriority="high" width="1600" height="900" />
+        <div className="hero-copy">
+          <p className="eyebrow">The Halloween collection · October 31</p>
+          <h1>A little fright.<br /><em>A lot of delight.</em></h1>
+          <p>Set the scene for a wonderfully wicked night. Discover decor, dress-up, and treats worth knocking for.</p>
+          <a className="btn" href="#catalog">Shop the collection <span aria-hidden="true">↗</span></a>
+          <span className="hero-caption">Make your doorstep the one they remember.</span>
         </div>
-        <div className="moon" aria-hidden="true" />
       </section>
+
+      <div className="perks"><span>Free shipping over $60</span><span>Little details. Big Halloween energy.</span><span>Decor · Costumes · Treats</span></div>
 
       <section aria-labelledby="catalog">
         <div className="head">
-          <h2 id="catalog">Shop the haunt</h2>
+          <div><p className="eyebrow">Find your kind of spooky</p><h2 id="catalog">Shop the haunt<span className="catalog-count">{list.length} finds</span></h2></div>
           <div className="chips" role="group" aria-label="Filter by category">
             {categories.map((c) => (
               <button key={c} className="chip" aria-pressed={cat === c} onClick={() => setCat(c)}>{c}</button>
@@ -59,6 +64,7 @@ export default function Shop() {
             </li>
           ))}
         </ul>
+        {count > 0 && <div className="cart-shortcut"><div><strong>{count} {count === 1 ? 'find' : 'finds'} in your bag · {money(subtotal)}</strong><span role="status">{added ? `${added} added` : 'Your Halloween is taking shape.'}</span></div><Link className="btn" to="/cart">View cart <span aria-hidden="true">→</span></Link></div>}
       </section>
     </>
   )

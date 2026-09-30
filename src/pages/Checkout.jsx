@@ -15,7 +15,7 @@ const fields = [
 export default function Checkout() {
   const { lines, subtotal, dispatch } = useCart()
   const nav = useNavigate()
-  const [form, setForm] = useState({ name: '', email: '', address: '', city: '', zip: '', card: '' })
+  const [form, setForm] = useState({ name: '', email: '', address: '', city: '', zip: '' })
   const [errors, setErrors] = useState({})
 
   if (!lines.length) return <Navigate to="/cart" replace />
@@ -29,7 +29,6 @@ export default function Checkout() {
     if (form.address.trim().length < 4) e.address = 'Enter your street address.'
     if (form.city.trim().length < 2) e.city = 'Enter your city.'
     if (form.zip.trim().length < 3) e.zip = 'Enter your postal code.'
-    if (form.card.replace(/\s/g, '').length < 12) e.card = 'Enter any 12+ digit number. This is a demo, nothing is charged.'
     return e
   }
 
@@ -69,15 +68,8 @@ export default function Checkout() {
               </div>
             ))}
           </fieldset>
-          <fieldset>
-            <legend>Payment (demo)</legend>
-            <div className="field">
-              <label htmlFor="card">Card number</label>
-              <input inputMode="numeric" autoComplete="off" placeholder="4242 4242 4242 4242" {...bind('card')} />
-              {errors.card && <span className="err" id="card-err">{errors.card}</span>}
-            </div>
-          </fieldset>
-          <button className="btn wide" type="submit">Place order, {money(total)}</button>
+          <p className="hint">Demo checkout — no payment details needed and nothing will be charged.</p>
+          <button className="btn wide" type="submit">Place demo order · {money(total)}</button>
           <Link to="/cart" className="link">Back to cart</Link>
         </form>
         <aside className="sum" aria-label="Order summary">

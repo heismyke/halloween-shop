@@ -7,7 +7,15 @@ const CartContext = createContext(null)
 const load = () => {
   try {
     const raw = JSON.parse(localStorage.getItem(KEY))
-    return Array.isArray(raw) ? raw.filter((i) => getProduct(i.id) && i.qty > 0) : []
+    if (!Array.isArray(raw)) return []
+    const normalized = new Map()
+    for (const item of raw) {
+      const product = item && getProduct(item.id)
+      const qty = Number(item?.qty)
+      if (!product || !Number.isFinite(qty) || qty < 1) continue
+      normalized.set(product.id, Math.min(20, (normalized.get(product.id) || 0) + Math.floor(qty)))
+    }
+    return [...normalized].map(([id, qty]) => ({ id, qty }))
   } catch {
     return []
   }

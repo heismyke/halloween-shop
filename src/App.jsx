@@ -9,7 +9,7 @@ import Confirmation from './pages/Confirmation.jsx'
 
 function ScrollTop() {
   const { pathname } = useLocation()
-  useEffect(() => window.scrollTo(0, 0), [pathname])
+  useEffect(() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' }), [pathname])
   return null
 }
 
@@ -18,9 +18,10 @@ export default function App() {
   return (
     <>
       <a className="skip" href="#main">Skip to content</a>
+      <div className="announcement">A season for the strange & wonderful <span>Free shipping on orders $60+</span></div>
       <header className="bar">
         <Link to="/" className="brand" aria-label="Hollow Hour, home">
-          <span aria-hidden="true">🎃</span> Hollow Hour
+          <span className="brand-mark" aria-hidden="true">✳</span> Hollow Hour<span className="brand-dot">.</span>
         </Link>
         <nav aria-label="Main">
           <NavLink to="/" end>Shop</NavLink>

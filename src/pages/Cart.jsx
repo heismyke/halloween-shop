@@ -19,7 +19,8 @@ export default function Cart() {
   const ship = shippingFor(subtotal)
   return (
     <>
-      <h1>Your cart</h1>
+      <p className="eyebrow">Your Halloween, collected</p>
+      <div className="page-heading"><h1>Your cart</h1><Link to="/">Continue shopping ↗</Link></div>
       <div className="cols">
         <ul className="lines">
           {lines.map((l) => (

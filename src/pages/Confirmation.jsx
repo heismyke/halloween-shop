@@ -10,7 +10,7 @@ export default function Confirmation() {
     <section className="done">
       <div className="seal" aria-hidden="true">🎃</div>
       <h1>Order confirmed</h1>
-      <p>Thanks, {order.name.split(' ')[0]}. A receipt is on its way to {order.email}.</p>
+      <p>Thanks, {order.name.split(' ')[0]}. Your demo order is complete. No payment was taken and no email will be sent.</p>
       <p className="ref">Order number <strong>{order.ref}</strong></p>
       <div className="sum flat">
         <ul className="mini">
@@ -18,7 +18,7 @@ export default function Confirmation() {
         </ul>
         <dl>
           <div><dt>Shipping</dt><dd>{order.ship ? money(order.ship) : 'Free'}</dd></div>
-          <div className="total"><dt>Total paid</dt><dd>{money(order.total)}</dd></div>
+          <div className="total"><dt>Demo total</dt><dd>{money(order.total)}</dd></div>
         </dl>
         <p className="hint">Delivering to {order.address}</p>
       </div>
